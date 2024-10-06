@@ -2,12 +2,12 @@
 {
     public enum GenreEnum
     {
-        Drama,
-        Comedy,
-        Action,
-        Thriller,
-        SciFi,
-        Horror,
-        Romance
+        Drama = 1,
+        Comedy = 2,
+        Action = 3,
+        Thriller = 4,
+        SciFi = 5,
+        Horror = 6,
+        Romance = 7
     }
 }

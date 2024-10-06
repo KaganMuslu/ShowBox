@@ -21,12 +21,6 @@ namespace ShowBox.Data
 
             #region Many To Many Relations
 
-            // SerieReview
-            modelBuilder.Entity<SerieReview>()
-                .HasOne(x => x.Serie)
-                .WithMany(x => x.SerieReviews)
-                .HasForeignKey(x => x.SerieId);
-
             #endregion
         }
 

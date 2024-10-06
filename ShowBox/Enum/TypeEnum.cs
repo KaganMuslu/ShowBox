@@ -2,9 +2,9 @@
 {
     public enum TypeEnum
     {
-        TVShow,
-        Movie,
-        MiniSeries,
-        Documentary
+        TVShow = 1,
+        Movie = 2,
+        MiniSeries = 3,
+        Documentary = 4
     }
 }

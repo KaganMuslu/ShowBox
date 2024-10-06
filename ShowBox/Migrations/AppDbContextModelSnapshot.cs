@@ -88,62 +88,20 @@ namespace ShowBox.Migrations
                     b.ToTable("Series");
                 });
 
-            modelBuilder.Entity("ShowBox.Models.SerieReview", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ReviewId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SerieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReviewId");
-
-                    b.HasIndex("SerieId");
-
-                    b.ToTable("SerieReview");
-                });
-
             modelBuilder.Entity("ShowBox.Models.Review", b =>
                 {
                     b.HasOne("ShowBox.Models.Serie", "Serie")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("SerieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Serie");
-                });
-
-            modelBuilder.Entity("ShowBox.Models.SerieReview", b =>
-                {
-                    b.HasOne("ShowBox.Models.Review", "Review")
-                        .WithMany()
-                        .HasForeignKey("ReviewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ShowBox.Models.Serie", "Serie")
-                        .WithMany("SerieReviews")
-                        .HasForeignKey("SerieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Review");
 
                     b.Navigation("Serie");
                 });
 
             modelBuilder.Entity("ShowBox.Models.Serie", b =>
                 {
-                    b.Navigation("SerieReviews");
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,6 +14,6 @@ namespace ShowBox.Models
         public bool Status { get; set; }
 
         // Navigation Properties
-        public List<SerieReview>? SerieReviews { get; set; }
+        public List<Review>? Reviews { get; set; }
     }
 }
