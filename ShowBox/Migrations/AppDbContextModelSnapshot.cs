@@ -22,6 +22,35 @@ namespace ShowBox.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("ShowBox.Models.Episode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("SerieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StreamLink")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SerieId");
+
+                    b.ToTable("Episode");
+                });
+
             modelBuilder.Entity("ShowBox.Models.Review", b =>
                 {
                     b.Property<int>("Id")
@@ -59,10 +88,18 @@ namespace ShowBox.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("BigImage")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -71,6 +108,10 @@ namespace ShowBox.Migrations
 
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -88,6 +129,17 @@ namespace ShowBox.Migrations
                     b.ToTable("Series");
                 });
 
+            modelBuilder.Entity("ShowBox.Models.Episode", b =>
+                {
+                    b.HasOne("ShowBox.Models.Serie", "Serie")
+                        .WithMany("Episodes")
+                        .HasForeignKey("SerieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Serie");
+                });
+
             modelBuilder.Entity("ShowBox.Models.Review", b =>
                 {
                     b.HasOne("ShowBox.Models.Serie", "Serie")
@@ -101,6 +153,8 @@ namespace ShowBox.Migrations
 
             modelBuilder.Entity("ShowBox.Models.Serie", b =>
                 {
+                    b.Navigation("Episodes");
+
                     b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618

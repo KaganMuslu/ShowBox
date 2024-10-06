@@ -23,6 +23,12 @@ namespace ShowBox.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Summary = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Image = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    BigImage = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Type = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Genre = table.Column<string>(type: "longtext", nullable: false)
@@ -35,6 +41,31 @@ namespace ShowBox.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Series", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Episode",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    StreamLink = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SerieId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Episode", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Episode_Series_SerieId",
+                        column: x => x.SerieId,
+                        principalTable: "Series",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -64,6 +95,11 @@ namespace ShowBox.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Episode_SerieId",
+                table: "Episode",
+                column: "SerieId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reviews_SerieId",
                 table: "Reviews",
                 column: "SerieId");
@@ -72,6 +108,9 @@ namespace ShowBox.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Episode");
+
             migrationBuilder.DropTable(
                 name: "Reviews");
 

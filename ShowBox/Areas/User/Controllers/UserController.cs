@@ -16,7 +16,20 @@ namespace ShowBox.Areas.User.Controllers
         {
             var baseMovies = new UserViewModel
             {
-                Trending = _context.Series.Include(x => x.Reviews).ToList(),
+                Trending = _context.Series
+                    .Select(s => new SerieViewModel
+                    {
+                        Id = s.Id,
+                        Title = s.Title,
+                        Type = s.Type,
+                        Genre = s.Genre,
+                        Score = s.Score,
+                        Views = s.Views,
+                        Status = s.Status,
+                        ReviewCount = s.Reviews.Count, // Count Comment
+                        EpisodeCount = s.Episodes.Count // Count Episode
+                    })
+                    .ToList(),
             };
 
             return View(baseMovies);
